@@ -1,0 +1,296 @@
+.dashboard-wrapper {
+  min-height: min(950px, 80vh);
+  background-color: inherit;
+  padding: 30px 0;
+}
+.wrapper-icons {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  position: relative;
+}
+.left-menu {
+  padding-top: 30px;
+  min-height: 100%;
+  height: auto;
+  margin-right: 30px;
+  border-radius: 20px;
+  width: 100%;
+  background-color: white;
+  box-shadow: -2px 4px 20px 0px #6379f42e;
+  color: black;
+  position: relative;
+  font-size: calc(14px + 0.3vw);
+}
+.topMenu,
+.bottomMenu {
+  padding-left: 0px;
+  margin-top: 0;
+}
+.topMenu li {
+  margin-bottom: calc(15px + 2vh);
+}
+.topMenu li,
+.bottomMenu li {
+  padding-left: calc(50px + 1vw);
+}
+.liMenu {
+  background-position-x: 15px;
+  background-position-y: center;
+  background-repeat: no-repeat;
+  background-size: 25px 25px;
+  cursor: pointer;
+}
+.menuDashboard {
+  background-image: url('../../../public/static/icons/dashboard.svg');
+  color: black;
+}
+.menuDashboardActive {
+  background-image: url('../../../public/static/icons/dashboard-blue.svg');
+  border-left: 5px solid #0070f3;
+  color: #0070f3;
+  padding-left: calc(45px + 1vw);
+}
+.menuTransfer {
+  background-image: url('../../../public/static/icons/transfer.svg');
+  color: black;
+}
+.menuTransferActive {
+  background-image: url('../../../public/static/icons/transfer-blue.svg');
+  border-left: 5px solid #0070f3;
+  color: #0070f3;
+  padding-left: calc(45px + 1vw);
+}
+.menuTopUp {
+  background-image: url('../../../public/static/icons/topup.svg');
+  color: black;
+}
+.menuProfile {
+  background-image: url('../../../public/static/icons/profile.svg');
+  color: black;
+}
+.menuProfileActive {
+  background-image: url('../../../public/static/icons/profile-blue.svg');
+  border-left: 5px solid #0070f3;
+  color: #0070f3;
+  padding-left: calc(45px + 1vw);
+}
+.menuLogout {
+  background-image: url('../../../public/static/icons/logout.svg');
+  color: black;
+}
+
+.bottomMenu {
+  padding-left: 10px;
+  position: absolute;
+  bottom: 0;
+}
+.menu {
+  margin-bottom: calc(10px + 3vh);
+}
+.menu-active {
+  color: #0070f3;
+  /* outline: 5px solid #0070f3; */
+  box-shadow: inset 5px 0px 0px 0px #0070f3;
+}
+.left-menu ul {
+  list-style-type: none;
+}
+
+.right-content {
+  /* padding-top: 30px; */
+  min-height: 100%;
+  height: auto;
+  margin-right: 30px;
+  border-radius: 20px;
+  /* margin-top: 20px; */
+  width: 100%;
+  /* background-color: white;
+  box-shadow: -2px 4px 20px 0px #6379f42e; */
+  /* color: black; */
+}
+
+.balance {
+  padding: 20px;
+  width: 100%;
+  height: min(180px, 25vh);
+  background-color: #6379f4;
+  border-radius: 20px;
+  color: white;
+}
+.balance-header {
+  color: #e0e0e0;
+  padding-left: 10px;
+  font-size: calc(14px + 0.2vw);
+}
+.balance-balance {
+  padding-left: 10px;
+  font-weight: bold;
+  font-size: calc(30px + 1.5vw);
+}
+.balance-phone {
+  padding-left: 10px;
+  color: #e0e0e0;
+  font-size: calc(11px + 0.2vw);
+}
+.btn-balance {
+  width: 150px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid #ffffff;
+  margin-bottom: 10px;
+}
+.dashboard-content-wrapper {
+  height: max(450px, 35vh);
+}
+.dashboard-content-left,
+.dashboard-content-right {
+  background-color: white;
+  height: 100%;
+  box-shadow: -2px 4px 20px 0px #6379f42e;
+  border-radius: 20px;
+  padding: 25px 10px;
+}
+.dashboard-income {
+  color: gray;
+  font-size: calc(12px + 0.2vw);
+}
+.dashboard-expense {
+  font-size: calc(12px + 0.2vw);
+  color: gray;
+}
+.dashboard-content-left {
+  margin-right: 20px;
+}
+.dashboard-content-right {
+  margin-left: 20px;
+}
+
+.transaction-user {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.transfer-wrapper {
+  min-height: 100%;
+  height: auto;
+  margin-right: 30px;
+  border-radius: 20px;
+  padding: 20px;
+  width: 100%;
+  background-color: white;
+  box-shadow: -2px 4px 20px 0px #6379f42e;
+  color: black;
+}
+
+.transfer-wrapper .search {
+  width: 100%;
+  border: none;
+  padding: 15px 15px 15px 40px;
+  outline: none;
+  background-image: url('../../../public/static/icons/search.svg');
+  background-repeat: no-repeat;
+  background-position: 10px, left;
+  background-color: rgba(58, 61, 66, 0.1);
+  margin-inline: 0;
+  border-radius: 8px;
+}
+
+.contact-item {
+  box-shadow: -2px 4px 20px 0px #6379f427;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-radius: 8px;
+}
+.contact-item p {
+  line-height: 13px;
+}
+.wrapper-user-image {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.transfer-wrapper input::-webkit-outer-spin-button,
+.transfer-wrapper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.transfer-wrapper input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.input-amount {
+  padding: 20px;
+  width: 50%;
+  outline: none;
+  background-color: none;
+  caret-color: red;
+  color: rgb(58, 58, 58);
+  border: none;
+  text-align: center;
+  font-weight: bold;
+  font-size: calc(20px + 1vw);
+}
+.input-pin {
+  width: 90%;
+  outline: 1px solid #a9a9a9;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 7px;
+  text-align: center;
+  margin-inline: 5%;
+  /* border-bottom:0.3 solid #a9a9a9; */
+}
+.transfer-notes {
+  border: none;
+  outline: none;
+  color: rgb(58, 58, 58);
+  border-bottom: 2px solid rgba(169, 169, 169, 0.6);
+  width: 30%;
+  padding: 10px 15px 10px 40px;
+  background-image: url('../../../public/static/icons/pencil.svg');
+  background-position: 10px, center;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+}
+.btn-blue {
+  background-color: #6379f4;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 8px;
+}
+.btn-white {
+  background-color: rgb(235, 235, 235);
+  color: black;
+  padding: 10px 25px;
+  border-radius: 8px;
+}
+.btn-light-blue {
+  background-color: rgba(99, 121, 244, 0.15);
+  color: #6379f4;
+  padding: 10px 25px;
+  border-radius: 8px;
+}
+.transfer-success,
+.transfer-failed {
+  width: 50px;
+  height: 50px;
+  background-position-x: center;
+  background-position-y: center;
+  background-repeat: no-repeat;
+  background-size: 50px 50px;
+  margin-inline: auto;
+  margin-bottom: 0.75rem;
+}
+.transfer-success {
+  background-image: url('../../../public/static/icons/success.svg');
+}
+.transfer-failed {
+  background-image: url('../../../public/static/icons/failed.svg');
+}

@@ -1,0 +1,94 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Nunito Sans', sans-serif !important;
+  background-color: #fafcff !important;
+  font-size: calc(14px + 0.2vw);
+}
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+}
+a {
+  color: inherit;
+  text-decoration: none !important;
+  cursor: pointer !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+.cursor-pointer {
+  cursor: pointer !important;
+}
+.logo-zwallet {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  font-size: 25px;
+  cursor: pointer;
+}
+.logo-zwallet-blue {
+  color: #6379f4;
+}
+.bg-white {
+  background-color: white;
+}
+.color-blue {
+  color: #0070f3 !important;
+}
+.color-green {
+  color: #1ec15f !important;
+}
+.color-red {
+  color: #ff5b37 !important;
+}
+.color-grey {
+  color: #7a7886 !important;
+}
+.color-white {
+  color: #ffffff !important;
+}
+.font-normal {
+  font-size: calc(14px + 0.3vw) !important;
+}
+.font-header {
+  font-size: calc(16px + 0.3vw) !important;
+}
+.font-medium {
+  font-size: calc(18px + 0.3vw) !important;
+}
+.font-big {
+  font-size: calc(20px + 0.3vw) !important;
+}
+.font-extra-large {
+  font-size: calc(20px + 3vw) !important;
+}
+
+.modal-header,
+.modal-body,
+.modal-footer {
+  border: none !important;
+}
+.modal-dialog {
+  margin: 25vh auto !important;
+  border-radius: 15px !important;
+}
+.modal-content {
+  border-radius: 15px !important;
+  border: none !important;
+}
+.modal-footer{
+  justify-content: space-between!important;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}

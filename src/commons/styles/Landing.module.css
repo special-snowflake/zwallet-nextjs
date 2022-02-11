@@ -1,0 +1,177 @@
+.btnWhite {
+    background-color: white;
+    color: #6379f4;
+    padding: 10px 15px;
+    border-radius: 7px;
+  }
+  .btnBlue {
+    color: white;
+    background-color: #6379f4;
+    border: 2px solid white;
+    padding: 8px 13px;
+    border-radius: 7px;
+  }
+  .landingTop {
+    width: 100%;
+    min-height: 100vh;
+    color: white;
+    background-image: url('../../../public/static/images/bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-size: calc(14px + 0.3vw);
+  }
+  .landingTop h1 {
+    font-weight: bold;
+    font-size: calc(20px + 3vw);
+    color: white;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .landingMiddle {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0px;
+  }
+  .landingMiddle h1 {
+    font-weight: bold;
+    font-size: calc(20px + 3vw);
+    color: black;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .landingMiddle h3 {
+    font-weight: bold;
+    font-size: calc(15px + 0.3vw);
+  }
+  .logoSupport {
+    background-image: url('../../../public/static/icons/support.svg');
+  }
+  .logoPrivacy {
+    background-image: url('../../../public/static/icons/privacy.svg');
+  }
+  .logoDownload {
+    background-image: url('../../../public/static/icons/download.svg');
+  }
+  
+  .logoSupport,
+  .logoPrivacy,
+  .logoDownload {
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80px;
+  }
+  
+  .landingSecondMiddle {
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden !important;
+  }
+  .companySupport {
+    min-height: 35vh;
+    width: 100%;
+    padding-top: 10vh;
+    background-color: rgba(71, 58, 209, 0.06);
+  }
+  
+  .brandLogo {
+    height: 100px;
+    width: 125px;
+    position: relative;
+    margin-inline: 10px;
+  }
+  .infoMoney {
+    color: #6379f4;
+    padding: 25px 30px;
+    background: rgba(71, 58, 209, 0.06);
+    width: auto;
+    border-radius: 30px;
+    font-weight: bolder;
+    max-width: max(40%, 400px);
+    margin-inline: auto;
+  }
+  .infoMoneyHeader {
+    font-weight: bold;
+  }
+  .landingFeature {
+    min-height: 100vh;
+    height: auto;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: rgba(71, 58, 209, 0.06);
+  }
+  .landingFeature h1 {
+    font-weight: bold;
+    font-size: calc(18px + 3vw);
+    color: black;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .landingFeatureRow {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .phonesWrapper {
+    width: 500px;
+    height: 750px;
+    position: relative;
+    margin-left: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .featureWrapper {
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    max-width: min(80%, 700px);
+  }
+  .landingTestimony {
+    min-height: 100vh;
+    width: 100%;
+    background-color: rgb(229, 229, 229);
+    padding-top: 10vh;
+  }
+  .landingTestimony h1 {
+    font-weight: bold;
+    font-size: calc(18px + 3vw);
+    color: black;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .userImgWrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
+    margin-inline: auto;
+    overflow: hidden;
+  }
+  .testimony {
+    width: min(80%, 900px);
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background-color: white;
+    border-radius: 15px;
+    padding: 45px 15px;
+  }
+  .landingFooter {
+    min-height: 25vh;
+    width: 100%;
+    background-color: #6379f4;
+  }
+  .footerText {
+    width: max(25%, 400px);
+  }
+  .landingFooter hr {
+    height: 1px;
+    background-color:white;
+    border: none;
+  }
+  

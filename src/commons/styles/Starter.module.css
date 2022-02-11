@@ -1,0 +1,125 @@
+.starter-left {
+  background-color: rgb(99, 121, 244);
+  color: white;
+  min-height: 100vh;
+}
+.starter-bg-siwrl {
+  background-image: url('../../../public/static/images/Mask\ Group.png');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.image-phone {
+  position: relative;
+  /* margin-inline: auto; */
+  width: auto !important;
+  height: calc(200px + 30vh) !important;
+}
+.left-header {
+  font-size: calc(17px + 0.2vw);
+}
+.left-sub-header {
+  font-size: calc(14px + 0.2vw);
+  color: #3a3d4299;
+  color: white;
+}
+.section-right {
+  min-height: 100vh;
+  /* background-color: #e5e5e5; */
+  background-color: white;
+}
+.starter-msg {
+  font-size: calc(17px + 0.2vw);
+}
+.starter-sub-msg {
+  font-size: calc(14px + 0.2vw);
+  color: #3a3d4299;
+}
+.starter-form input {
+  width: 100%;
+  margin-bottom: 15px;
+  font-size: 18px;
+  padding: 5px 10px 5px 30px;
+  color: #3a3d42;
+  border: none;
+  border-bottom: 2px solid #a9a9a9;
+}
+.starter-form input::placeholder {
+  color: #a9a9a9;
+}
+input.error {
+  border-bottom: 2px solid red !important;
+}
+.starter-form input:focus,
+.starter-form input:not(:placeholder-shown) {
+  outline: none;
+  border-bottom: 2px solid #6379f4;
+}
+.input-wrapper {
+  min-height: 30px;
+  margin-bottom: 10px;
+  height: auto;
+}
+.form-msg-error {
+  /* inset: auto auto -65px auto; */
+  color: red !important;
+}
+.input-cross {
+  inset: 5px 0 auto auto;
+  cursor: pointer;
+}
+.input-icon {
+  inset: 5px auto auto 0;
+  position: absolute;
+}
+.forgot-password {
+  margin-top: calc(5px + 5vh);
+  margin-bottom: 20px;
+}
+.starter-btn {
+  width: 100%;
+  background-color: #6379f4;
+  color: white;
+  font-weight: bold;
+  padding: 10px 5px;
+  font-size: 18px;
+}
+.starter-btn-clicked {
+  background: #dadada;
+  color: #88888f;
+}
+.header {
+  min-height: 120px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  box-shadow: -2px 5px 20px 0px #6379f42e;
+}
+.header-name {
+  font-weight: bold;
+  font-size: calc(14px + 0.2vw);
+}
+.phone-number {
+  font-size: calc(12px + 0.2vw);
+}
+.profile-wrapper {
+  width: 35px;
+  height: 35px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.header-bell {
+  width: 25px;
+  height: 25px;
+}
+.footer {
+  min-height: 75px;
+  background-color: #6379f4;
+  color: white !important;
+  top: auto;
+  bottom: 0;
+}
+.starter-pin {
+  padding: 0 !important;
+  text-align: center;
+  margin: 0;
+}

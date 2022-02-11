@@ -1,0 +1,60 @@
+.modal-wrapper {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  overflow: hidden !important;
+}
+.modals {
+  width: min(35vw, 350px);
+  height: min(40vw, 370px);
+  background-color: white;
+  border-radius: 15px;
+  margin: auto;
+  margin-top: 300px;
+  padding: 20px;
+}
+.modals input {
+  width: 100%;
+  margin-inline: none;
+  outline: 1px solid rgba(169, 169, 169, 0.6);
+  padding: 10px 25px;
+  border: none;
+  border-radius: 8px;
+}
+.inputAmount {
+  width: 100%;
+  margin-inline: none;
+  outline: 1px solid rgba(169, 169, 169, 0.6);
+  padding: 15px 25px;
+  border: none;
+  text-align: center;
+  border-radius: 8px;
+  margin-top: 10px;
+  /* margin-bottom: 10px; */
+}
+.modals button {
+  padding: 10px 25px;
+  color: white;
+  background-color: #6379f4;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+.header {
+  font-weight: bold;
+  font-size: calc(16px + 0.3vw) !important;
+}
+
+.close-btn {
+  content: '';
+  width: 30px;
+  height: 30px;
+  background-image: url('../../../public/static/icons/close.svg');
+  background-position-x: right;
+  background-position-y: top;
+  background-repeat: no-repeat;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
