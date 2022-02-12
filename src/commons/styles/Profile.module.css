@@ -1,0 +1,20 @@
+.userImageWrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-inline: auto;
+}
+.boxInfo {
+  width: min(50vw, 350px);
+  background-color: #e5e8ed;
+  margin-inline: auto;
+  padding: 20px 15px;
+  border-radius: 10px;
+  min-height: 65px;
+  background-image: url('../../../public/static/icons/next.svg');
+  background-repeat: no-repeat;
+  background-position-x: right;
+  background-position-y: center;
+}

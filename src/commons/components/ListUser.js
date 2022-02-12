@@ -7,7 +7,7 @@ import Link from 'next/link';
 const loopData = (data) => {
   const elements = [];
   if (data.length === 0) {
-    return <>{`We can't find any user to show`}</>;
+    return <div className='col-12 mt-2'>{`We can't find any user to show`}</div>;
   }
   for (let i = 0; i < data.length; i++) {
     const element = (

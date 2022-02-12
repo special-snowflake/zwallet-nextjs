@@ -52,6 +52,9 @@ a {
 .color-white {
   color: #ffffff !important;
 }
+.font-small {
+  font-size: calc(12px + 0.3vw) !important;
+}
 .font-normal {
   font-size: calc(14px + 0.3vw) !important;
 }
@@ -81,8 +84,8 @@ a {
   border-radius: 15px !important;
   border: none !important;
 }
-.modal-footer{
-  justify-content: space-between!important;
+.modal-footer {
+  justify-content: space-between !important;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

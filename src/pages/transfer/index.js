@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
+import Router, {useRouter} from 'next/router';
 
 import Title from 'src/commons/components/Title';
 import Header from 'src/commons/components/Header';
@@ -11,12 +12,14 @@ import LoadingComponent from 'src/commons/components/LoadingComponent';
 import {getDataUser} from 'src/modules/api/users';
 
 import styles from 'src/commons/styles/Home.module.css';
+import {Pagination} from 'react-bootstrap';
+import Link from 'next/link';
 
-// export default
 function Transfer(props) {
-  const [search, setSearch] = useState(null);
   const [listUser, setListUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   console.log('props home', props);
+  const router = useRouter();
 
   const getListUser = (search, limit, sort, page) => {
     const filter = `?page=${page}&limit=${limit}&search=${search}&sort=${sort}`;
@@ -26,8 +29,9 @@ function Transfer(props) {
       .then((res) => {
         console.log('res list user', res);
         setListUser({
-          data: res.data.data,
+          data: res.data,
         });
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log('err list', err.response);
@@ -50,13 +54,77 @@ function Transfer(props) {
     console.log('search');
     const search = e.target.value;
     getListUser(search, 5, 'firstName ASC', 1);
+    setIsLoading(true);
+    Router.push({
+      pathname: '/transfer',
+      // query: {page: '1', filter: encodeURI(newQuery)},
+      query: {page: '1', search: search},
+    });
+  };
+
+  const showPagination = (data) => {
+    console.log('pagination', data);
+    const search = router.query.search ? router.query.search : '';
+    const {page, totalPage, limit, totalData} = data;
+    if (data.length === 0) {
+      return (
+        <div className='col-5 mt-5 float-start'>
+          <button className={`btn ${styles['btn-light-blue']} me-2`}>
+            Previous
+          </button>
+          <button className={`btn ${styles['btn-light-blue']} ms-2`}>
+            Next
+          </button>
+        </div>
+      );
+    }
+    return (
+      <div className='col-5 mt-5 text-start'>
+        {page === 1 ? (
+          <button className={`btn ${styles['btn-light-blue']} me-2`}>
+            Prev
+          </button>
+        ) : (
+          <Link
+            href={`/transfer?page=${page - 1}&search=${search}`}
+            passHref={true}>
+            <button
+              className={`btn ${styles['btn-blue']} me-2`}
+              onClick={() => {
+                setIsLoading(true);
+              }}>
+              Prev
+            </button>
+          </Link>
+        )}
+        {page < totalPage ? (
+          <Link
+            href={`/transfer?page=${page + 1}&search=${search}`}
+            passHref={true}>
+            <button
+              className={`btn ${styles['btn-blue']} ms-2`}
+              onClick={() => {
+                setIsLoading(true);
+              }}>
+              Next
+            </button>
+          </Link>
+        ) : (
+          <button className={`btn ${styles['btn-light-blue']} ms-2`}>
+            Next
+          </button>
+        )}
+      </div>
+    );
   };
 
   useEffect(() => {
-    if (listUser === null) {
-      getListUser('', 5, 'firstName ASC', 1);
-    }
-  });
+    const page = router.query.page ? router.query.page : '1';
+    const search = router.query.search ? router.query.search : '';
+    getListUser(search, 5, 'firstName ASC', page);
+    // if (listUser === null) {
+    // }
+  }, [router]);
   return (
     <>
       <Title title='Transfer - Zwallet' />
@@ -77,6 +145,7 @@ function Transfer(props) {
                       <div className='col-12 my-3 mb-4 px-0'>
                         <input
                           onChange={debounce(handleSearch)}
+                          onKeyPress={(e) => e.key === 'Enter' && handleSearch}
                           className={`${styles['search']}`}
                           type='text'
                           name='search'
@@ -87,20 +156,10 @@ function Transfer(props) {
                         />
                       </div>
                       <div className='col-12 row m-0 p-0'>
-                        {listUser !== null ? (
+                        {listUser !== null && !isLoading ? (
                           <>
-                            <ListUser data={listUser.data} />
-                            {listUser.data.length !== 0 && (
-                              <div className='w-100'>
-                                <button className={`btn ${styles['btn-blue']}`}>
-                                  Prev
-                                </button>
-                                <button
-                                  className={`btn ${styles['btn-blue']} ms-2`}>
-                                  Next
-                                </button>
-                              </div>
-                            )}
+                            <ListUser data={listUser.data.data} />
+                            {showPagination(listUser.data.pagination)}
                           </>
                         ) : (
                           <LoadingComponent />

@@ -22,11 +22,8 @@ import {getDataByID} from 'src/modules/api/users';
 
 import transferGrey from 'public/static/icons/transfer-grey.svg';
 import topupGrey from 'public/static/icons/topup-grey.svg';
-import income from 'public/static/icons/income.svg';
-import expense from 'public/static/icons/expense.svg';
-// import graphic from 'public/static/images/graphic.png';
 import {toast} from 'react-toastify';
-
+import DashboardStats from 'src/commons/components/DashboardStats';
 
 function Dashboard(props) {
   const [history, setHistory] = useState(null);
@@ -225,7 +222,8 @@ function Dashboard(props) {
               </div>
               <div
                 className={`row w-100 m-0 p-0 mt-4 justify-content-between ${styles['dashboard-content-wrapper']}`}>
-                <div className={`col ${styles['dashboard-content-left']}`}>
+                <DashboardStats />
+                {/* <div className={`col ${styles['dashboard-content-left']}`}>
                   <div className='d-flex'>
                     <div className='col text-start'>
                       <div className={`${styles['wrapper-icons']} ms-1`}>
@@ -259,14 +257,8 @@ function Dashboard(props) {
                   </div>
 
                   <div className='position-relative w-100 h-50 mt-5'>
-                    {/* <Image
-                      src={graphic}
-                      alt='dahsboard'
-                      objectFit='contain'
-                      layout='fill'
-                    /> */}
                   </div>
-                </div>
+                </div> */}
                 <div className={`col ${styles['dashboard-content-right']}`}>
                   <div className='row p-0 m-0 w-100 justify-content-between'>
                     <div className='col-8 fw-bold'>Transaction History</div>
