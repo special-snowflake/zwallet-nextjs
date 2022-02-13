@@ -52,3 +52,17 @@ export const validateLogin = (body) => {
   return loginScheme.validate(body);
 };
 
+export const validatePassword = (body) => {
+  const passwordScheme = Joi.object({
+    password: Joi.string()
+      .pattern(/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).{6,}$/)
+      .message({
+        'any.empty': 'Password is not allowed to be empty',
+        'string.empty': 'Password is not allowed to be empty',
+        'string.pattern.base':
+          'Password must be at least 6 characters, including lowercase, uppercase letter and number',
+        'any.required': `Password is required`,
+      }),
+  });
+  return passwordScheme.validate(body);
+};

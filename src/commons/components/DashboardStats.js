@@ -103,7 +103,7 @@ function DashboardStats(props) {
                 </div>
                 <span className={`${styles['dashboard-income']}`}>Income</span>
                 <div className='balance-income fw-bold'>
-                  Rp{numberToRupiah(dataDashboard.totalIncome)}
+                  Rp {numberToRupiah(dataDashboard.totalIncome)}
                 </div>
               </div>
               <div className='col text-end'>
@@ -119,7 +119,7 @@ function DashboardStats(props) {
                   Expense
                 </span>
                 <div className='balance-outcome fw-bold'>
-                  Rp{numberToRupiah(dataDashboard.totalExpense)}
+                  Rp {numberToRupiah(dataDashboard.totalExpense)}
                 </div>
               </div>
             </div>

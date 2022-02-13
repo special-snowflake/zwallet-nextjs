@@ -12,7 +12,6 @@ import LoadingComponent from 'src/commons/components/LoadingComponent';
 import {getDataUser} from 'src/modules/api/users';
 
 import styles from 'src/commons/styles/Home.module.css';
-import {Pagination} from 'react-bootstrap';
 import Link from 'next/link';
 
 function Transfer(props) {
@@ -122,8 +121,6 @@ function Transfer(props) {
     const page = router.query.page ? router.query.page : '1';
     const search = router.query.search ? router.query.search : '';
     getListUser(search, 5, 'firstName ASC', page);
-    // if (listUser === null) {
-    // }
   }, [router]);
   return (
     <>

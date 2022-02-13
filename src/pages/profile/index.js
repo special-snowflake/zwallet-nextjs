@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import {connect} from 'react-redux';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Modal} from 'react-bootstrap';
 import {useRouter} from 'next/router';
+import Link from 'next/link';
 
 import Title from 'src/commons/components/Title';
 import LoadingComponent from 'src/commons/components/LoadingComponent';
@@ -11,8 +12,10 @@ import Footer from 'src/commons/components/Footer';
 import SideNavigation from 'src/commons/components/SideNavigation';
 
 import {logout} from 'src/modules/api/auth';
-import Link from 'next/link';
+import {updateImageUser} from 'src/modules/api/users';
+import {getDataByID} from 'src/modules/api/users';
 import {logoutAction} from 'src/redux/actions/auth';
+import {updateDataUser} from 'src/redux/actions/users';
 
 import {toast} from 'react-toastify';
 import styles from 'src/commons/styles/Home.module.css';
@@ -20,7 +23,40 @@ import profileCss from 'src/commons/styles/Profile.module.css';
 import modalsCss from 'src/commons/styles/Modals.module.css';
 import defaultProfile from 'public/static/images/default.jpg';
 
+
 function Profile(props) {
+  const inputFileRef = React.createRef();
+
+  const inputImage = () => {
+    inputFileRef.current.click();
+    console.log('input file');
+  };
+
+  const handleFileChange = (e) => {
+    const id = props.id;
+    const token = props.token;
+    console.log('handle change', e);
+    const body = new FormData();
+    body.append('image', e.target.files[0]);
+    console.log;
+    updateImageUser(body, id, token)
+      .then((res) => {
+        toast.success('Image Updated');
+        getDataByID(id, token)
+          .then((res) => {
+            props.dispatch(updateDataUser(res.data.data));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        toast.error(err.response.msg);
+      });
+  };
+
   const [modaleLogout, setModaleLogout] = useState({show: false});
   const [image, setImage] = useState(defaultProfile);
   console.log('props profile', props);
@@ -31,6 +67,7 @@ function Profile(props) {
   console.log('userdata profile', props.userData);
 
   const router = useRouter();
+
   const hanndleLogout = () => {
     if (props.token) {
       logout(props.token)
@@ -63,6 +100,18 @@ function Profile(props) {
       }
     }
   }, []);
+  useEffect(() => {
+    if (props.userData) {
+      if (
+        props.userData.userData.image &&
+        props.userData.userData.image !== null &&
+        image !== props.userData.image
+      ) {
+        const img = host + '/uploads/' + props.userData.userData.image;
+        setImage(img);
+      }
+    }
+  }, [props]);
 
   return (
     <>
@@ -83,7 +132,9 @@ function Profile(props) {
                       {props.userData ? (
                         <>
                           <div className='col-12 my-2'>
-                            <div className={profileCss.userImageWrapper}>
+                            <div
+                              className={`cursor-pointer ${profileCss.userImageWrapper}`}
+                              onClick={inputImage}>
                               <Image
                                 src={image}
                                 alt='user profile'
@@ -91,26 +142,34 @@ function Profile(props) {
                                 objectFit='cover'
                                 placeholder='blur'
                                 blurDataURL={defaultProfile}
+                                priority={true}
                                 onError={() => {
                                   setImage(defaultProfile);
                                 }}
-                                // onError={({currentTarget}) => {
-                                //   currentTarget.onerror = null;
-                                //   currentTarget.src = defaultProfile;
-                                // }}
-                                // onError={({currentTarget}) => {
-                                //   currentTarget.onerror = null;
-                                //   currentTarget.src = require('../../../public/images/default.jpg');
-                                // }}
                               />
                             </div>
                           </div>
-                          <div className='my-1'>Edit</div>
+                          <input
+                            type='file'
+                            name='image'
+                            hidden={true}
+                            ref={inputFileRef}
+                            onChange={(e) => {
+                              handleFileChange(e);
+                            }}
+                          />
+                          <div className={`my-1 color-grey font-normal`}>
+                            <div
+                              className={`cursor-pointer ${profileCss.profileEditBtn}`}
+                              onClick={inputImage}>
+                              Edit
+                            </div>
+                          </div>
                           <div className='fw-bold font-header'>
                             {props.userData.userData.firstName}{' '}
                             {props.userData.userData.lastName}
                           </div>
-                          <div className='font-normal color-grey'>
+                          <div className='font-normal color-grey my-2'>
                             {props.userData.userData.noTelp
                               ? props.userData.userData.noTelp
                               : '-'}
@@ -125,14 +184,20 @@ function Profile(props) {
                             </Link>
                           </div>
                           <div className='col-12 cursor-pointer'>
-                            <div className={`${profileCss.boxInfo} my-2`}>
-                              <div className='float-start'>Change Password</div>
-                            </div>
+                            <Link href={'/profile/password'} passHref={true}>
+                              <div className={`${profileCss.boxInfo} my-2`}>
+                                <div className='float-start'>
+                                  Change Password
+                                </div>
+                              </div>
+                            </Link>
                           </div>
                           <div className='col-12 cursor-pointer'>
-                            <div className={`${profileCss.boxInfo} my-2`}>
-                              <div className='float-start'>Change PIN</div>
-                            </div>
+                            <Link href={'/profile/pin'} passHref={true}>
+                              <div className={`${profileCss.boxInfo} my-2`}>
+                                <div className='float-start'>Change PIN</div>
+                              </div>
+                            </Link>
                           </div>
                           <div className='col-12 cursor-pointer'>
                             <div

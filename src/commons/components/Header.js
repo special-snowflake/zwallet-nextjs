@@ -12,9 +12,10 @@ import defaultProfile from 'public/static/images/default.jpg';
 import bell from 'public/static/icons/bell.svg';
 
 function Header(props) {
-  console.log('props header', props);
+  // console.log('props header', props);
   const [userData, setUserData] = useState(null);
-  console.log('state userData', userData);
+  const [image, setImage] = useState(defaultProfile);
+  // console.log('state userData', userData);
   useEffect(() => {
     if (props.userData && userData === null) {
       console.log('use effect', props.userData);
@@ -26,15 +27,22 @@ function Header(props) {
       console.log('null');
       getDataByID(id, token)
         .then((res) => {
-          // console.log(res);
           props.dispatch(updateDataUser(res.data.data));
         })
         .catch((err) => {
-          // console.log(err);
           console.log(err.response);
         });
     }
   }, [userData, props]);
+  useEffect(() => {
+    if (props.userData) {
+      if (props.userData.userData.image && props.userData.userData.image !== null) {
+        const newImage =
+          process.env.NEXT_PUBLIC_HOST + '/uploads/' + props.userData.userData.image;
+        setImage(newImage);
+      }
+    }
+  }, [props]);
   return (
     <>
       <header
@@ -51,21 +59,23 @@ function Header(props) {
               </div>
               <div className='col-6 mt-4 text-center d-flex justify-content-end'>
                 <div className='col-1 w-auto mt-2'>
-                  <Link href={'/profile'} passHref className='cursor-pointer'>
+                  <Link href={'/profile'} passHref={true}>
                     <div
-                      className={`position-relative ${style['profile-wrapper']} me-3 ms-auto`}>
+                      className={`position-relative cursor-pointer ${style['profile-wrapper']} me-3 ms-auto`}>
                       <Image
-                        src={defaultProfile}
+                        src={image}
                         alt='user'
                         layout='fill'
                         objectFit='cover'
+                        onError={() => {
+                          setImage(defaultProfile);
+                        }}
                       />
                     </div>
                   </Link>
                 </div>
                 <div className='col-1 w-auto mt-1'>
                   <div className={`${style['header-name']}`}>
-                    {/* {userData} */}
                     {userData
                       ? `${userData.userData.firstName} ${userData.userData.lastName}`
                       : ''}

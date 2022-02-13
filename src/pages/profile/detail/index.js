@@ -1,8 +1,5 @@
-import Image from 'next/image';
 import {connect} from 'react-redux';
-import {useEffect, useState} from 'react';
-import {Modal} from 'react-bootstrap';
-import {useRouter} from 'next/router';
+import {useState} from 'react';
 
 import Title from 'src/commons/components/Title';
 import LoadingComponent from 'src/commons/components/LoadingComponent';
@@ -10,14 +7,11 @@ import Header from 'src/commons/components/Header';
 import Footer from 'src/commons/components/Footer';
 import SideNavigation from 'src/commons/components/SideNavigation';
 
-import {toast} from 'react-toastify';
 import styles from 'src/commons/styles/Home.module.css';
-import profileCss from 'src/commons/styles/Profile.module.css';
-import modalsCss from 'src/commons/styles/Modals.module.css';
-import defaultProfile from 'public/static/images/default.jpg';
 import Link from 'next/link';
 
 function DetailProfile(props) {
+
   const title = props.userData
     ? `${props.userData.userData.firstName} ${props.userData.userData.lastName} - Zwallet`
     : 'Profile - Zwallet';
@@ -44,11 +38,56 @@ function DetailProfile(props) {
                               Personal Information
                             </div>
                           </div>
-                          <div className='col-12'>
+                          <div className='col-12 my-2'>
                             <div className='w-50 font-normal color-grey'>
                               We got your personal information from the sign up
                               proccess. If you want to make changes on your
                               information, contact our support.
+                            </div>
+                          </div>
+                          <div
+                            className={`col-12 ${styles['contact-item']} my-3 px-3`}>
+                            <div className='float-start ms-3'>
+                              <div className='color-grey'>First Name</div>
+                              <div className='fw-bold'>
+                                {props.userData.userData.firstName}
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            className={`col-12 ${styles['contact-item']} my-3 px-3`}>
+                            <div className='float-start ms-3'>
+                              <div className='color-grey'>Last Name</div>
+                              <div className='fw-bold'>
+                                {props.userData.userData.lastName}
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            className={`col-12 ${styles['contact-item']} my-3 px-3`}>
+                            <div className='float-start ms-3'>
+                              <div className='color-grey'>Verified E-mail</div>
+                              <div className='fw-bold'>
+                                {props.userData.userData.email}
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            className={`col-12 ${styles['contact-item']} my-3 px-3`}>
+                            <div className='float-start ms-3'>
+                              <div className='color-grey'>Phone-Number</div>
+                              <div className='fw-bold'>
+                                {' '}
+                                {props.userData.userData.noTelp &&
+                                props.userData.userData.noTelp !== null
+                                  ? props.userData.userData.noTelp
+                                  : '-'}
+                              </div>
+                            </div>
+                            <div className='float-end my-3'>
+                              <span className='color-blue my-auto cursor-pointer'>
+                                <Link href={'/profile/phone'}>Manage</Link>
+                              </span>
                             </div>
                           </div>
                         </>
@@ -64,6 +103,7 @@ function DetailProfile(props) {
         </div>
       </main>
       <Footer />
+
     </>
   );
 }

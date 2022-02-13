@@ -5,6 +5,7 @@ body {
   font-family: 'Nunito Sans', sans-serif !important;
   background-color: #fafcff !important;
   font-size: calc(14px + 0.2vw);
+  color: #4d4b57;
 }
 *,
 *::after,
@@ -36,6 +37,9 @@ a {
 }
 .bg-white {
   background-color: white;
+}
+.color-black {
+  color: #4d4b57 !important  ;
 }
 .color-blue {
   color: #0070f3 !important;
@@ -69,6 +73,12 @@ a {
 }
 .font-extra-large {
   font-size: calc(20px + 3vw) !important;
+}
+
+button:disabled,
+button[disabled] {
+  color: #636366 !important;
+  background-color: #dadada !important;
 }
 
 .modal-header,

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import {useState} from 'react';
-import PageTitle from 'src/commons/components/PageTitle';
+import Title from 'src/commons/components/Title';
 
 import {updatePin} from 'src/modules/api/users';
 import {updatePin as updatePinRedux} from 'src/redux/actions/auth';
@@ -56,7 +56,7 @@ function NewPin(props) {
   };
   return (
     <>
-      <PageTitle title={'Create New Pin - Zwallet'} />
+      <Title title={'Create New Pin - Zwallet'} />
       <div className='main container-fluid px-0'>
         <div className='row mx-0 my-0'>
           <section

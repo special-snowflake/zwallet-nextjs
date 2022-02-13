@@ -8,20 +8,20 @@ import {
 
 import styles from 'src/commons/styles/Home.module.css';
 import Link from 'next/link';
+import {useEffect, useState} from 'react';
 function TransactionList(props) {
-  const host = process.env.NEXT_PUBLIC_HOST;
-  console.log('props list', props);
+  const [userImage, setUserImage] = useState(defaultImage);
+  
   const {fullName, image, amount, type} = props.data;
   const path = '/history/' + props.data.id;
-  let userImage = defaultImage;
-  if (image && image !== null) {
-    userImage = host + '/uploads/' + image;
-    // if (
-    //   props.userData.userData.image &&
-    //   props.userData.userData.image !== null
-    // ) {
-    // }
-  }
+  
+  useEffect(() => {
+    if (image && image !== null) {
+      const host = process.env.NEXT_PUBLIC_HOST;
+      const newImage = host + '/uploads/' + image;
+      setUserImage(newImage);
+    }
+  }, []);
   return (
     <>
       <Link href={path} passHref>
@@ -36,8 +36,9 @@ function TransactionList(props) {
                 placeholder='blur'
                 blurDataURL={defaultImage}
                 layout='fill'
-                onError={({currentTarget}) => {
-                  currentTarget.src = defaultImage;
+                onError={(e) => {
+                  console.log('target e', e);
+                  setUserImage(defaultImage);
                 }}
               />
             </div>

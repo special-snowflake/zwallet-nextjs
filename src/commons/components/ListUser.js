@@ -1,36 +1,23 @@
-import Image from 'next/image';
 import React from 'react';
-import styles from 'src/commons/styles/Home.module.css';
-import userProfile from 'public/static/images/default.jpg';
-import Link from 'next/link';
+import CardUser from './CardUser';
 
 const loopData = (data) => {
   const elements = [];
   if (data.length === 0) {
-    return <div className='col-12 mt-2'>{`We can't find any user to show`}</div>;
+    return (
+      <div className='col-12 mt-2'>{`We can't find any user to show`}</div>
+    );
   }
   for (let i = 0; i < data.length; i++) {
+    console.log('list data user', data[i]);
     const element = (
       <React.Fragment key={`user-${i}`}>
-        <Link href={`/transfer/${data[i].id}`} passHref={true}>
-          <div
-            className={`col-12 ${styles['contact-item']} mb-3 px-3 cursor-pointer`}>
-            <div className={`${styles['wrapper-user-image']} float-start`}>
-              <Image
-                src={userProfile}
-                alt='dahsboard'
-                objectFit='cover'
-                layout='fill'
-              />
-            </div>
-            <div className='float-start ms-3'>
-              <div className='fw-bold'>{`${data[i].firstName} ${data[i].lastName}`}</div>
-              <div className='color-grey'>
-                {data[i].noTelp !== null ? data[i].noTelp : '-'}
-              </div>
-            </div>
-          </div>
-        </Link>
+        <CardUser
+          id={data[i].id}
+          firstName={data[i].firstName}
+          lastName={data[i].lastName}
+          image={data[i].image}
+        />
       </React.Fragment>
     );
     elements.push(element);

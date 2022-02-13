@@ -18,3 +18,83 @@
   background-position-x: right;
   background-position-y: center;
 }
+.profileEditBtn {
+  padding: 5px 5px 5px 20px;
+  background-image: url('../../../public/static/icons/pencil.svg');
+  background-repeat: no-repeat;
+  background-size: 20px, 20px;
+  max-width: 80px;
+  /* text-align: l; */
+  margin-inline: auto;
+  background-position-x: left;
+  background-position-y: center;
+}
+
+.wrapperPhone {
+  min-height: min(200px, 25vh);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapperInput {
+  padding: 10px 10px 10px 30px;
+  border-bottom: 2px solid #a9a9a9;
+  background-image: url('../../../public/static/icons/phone.svg');
+  background-repeat: no-repeat;
+  background-position-x: left;
+  background-position-y: center;
+}
+.wrapperInput input {
+  outline: none;
+  border: none;
+  padding: 5px;
+}
+
+.wrapperPhone input:focus {
+  border: none;
+  outline: none;
+}
+.inputPasswordWrapper {
+  width: calc(250px + 5vw);
+  display: inline-block;
+  position: relative;
+}
+.errorWrapper {
+  width: calc(250px + 5vw);
+  margin-inline: auto;
+}
+.inputIcon {
+  position: absolute;
+  color: #a9a9a9;
+  top: 0;
+}
+.inputIconError {
+  position: absolute;
+  color: #ff5b37;
+  top: 0;
+}
+.iconTail {
+  position: absolute;
+  color: #a9a9a9;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+.inputPasswordWrapper input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #afb6dd;
+  padding: 5px 20px 5px 30px;
+  background-color: transparent;
+}
+.inputPasswordWrapper input:focus {
+  border-bottom: 2px solid #0070f3;
+  outline: none;
+}
+.buttonWrapper {
+  width: calc(250px + 5vw);
+  text-align: center;
+  margin-inline: auto;
+}

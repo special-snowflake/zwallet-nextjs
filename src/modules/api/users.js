@@ -38,3 +38,30 @@ export const checkPinUser = (pin, token) => {
     },
   });
 };
+
+export const updateImageUser = (body, id, token) => {
+  const url = host + '/image/' + id;
+  return axios.patch(url, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const updatePhoneNumber = (body, id, token) => {
+  const url = host + '/profile/' + id;
+  return axios.patch(url, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const updatePassword = (body, id, token) => {
+  const url = host + '/password/' + id;
+  return axios.patch(url, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
