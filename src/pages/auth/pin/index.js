@@ -64,7 +64,7 @@ function NewPin(props) {
             <div className='row h-100 align-middle'>
               <div className='col-12 col-lg-10 col-xl-8 mx-auto px-0'>
                 <div className='mt-5'>
-                  <Link href={'/dashboard'} passHref>
+                  <Link href={'/auth/login'} passHref>
                     <span className='logo-zwallet'>Zwallet</span>
                   </Link>
                 </div>

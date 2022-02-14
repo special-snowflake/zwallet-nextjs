@@ -66,3 +66,18 @@ export const validatePassword = (body) => {
   });
   return passwordScheme.validate(body);
 };
+
+export const validateEmail = (body) => {
+  const emailScheme = Joi.object({
+    email: Joi.string()
+      .pattern(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      )
+      .message({
+        'any.empty': 'Email is not allowed to be empty',
+        'string.empty': 'Email is not allowed to be empty',
+        'string.pattern.base': 'Email is not valid',
+      }),
+  });
+  return emailScheme.validate(body);
+};

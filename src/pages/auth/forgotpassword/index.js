@@ -1,86 +1,72 @@
 import Link from 'next/link';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import Title from 'src/commons/components/Title';
 import Image from 'next/image';
 import {useRouter} from 'next/router';
 import {connect} from 'react-redux';
-import {loginAction} from 'src/redux/actions/auth';
 import LeftContentStarter from 'src/commons/components/LeftContentStarter';
 
 import style from 'src/commons/styles/Starter.module.css';
-import phones from 'public/static/images/Phones.png';
 import email from 'public/static/icons/mail.svg';
-import lock from 'public/static/icons/lock.svg';
-import eyeCrossed from 'public/static/icons/eye-crossed.svg';
 
-import {validateLogin} from 'src/modules/validation/authValidation';
+import {validateEmail} from 'src/modules/validation/authValidation';
 
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {forgotPassword} from 'src/modules/api/auth';
 
-function Login(props) {
+function ForgetPassword(props) {
   console.log(props);
-  const [conf, setConf] = useState({passwordType: 'password', submit: true});
   const initialError = {
     email: null,
-    password: null,
   };
   const [errValidate, setErrValidate] = useState(initialError);
+  const [isDisabled, setIsDesabled] = useState(true);
 
-  const router = useRouter();
-  const handleLogin = (e) => {
-    e.preventDefault();
-    console.log('email pass', e.target.email.value, e.target.password.value);
+  const onChangeEmail = (e) => {
     const body = {
-      email: e.target.email.value,
-      password: e.target.password.value,
+      email: e.target.value,
     };
-    const validation = validateLogin(body);
-
+    const validation = validateEmail(body);
     if (!validation.error) {
-      setErrValidate({initialError});
-      props.dispatch(loginAction(body));
+      setIsDesabled(false);
+      setErrValidate({email: null});
     }
     if (validation.error) {
-      const valError = validation.error.details;
-      valError.forEach((element) => {
-        console.log('error element', element.message, typeof element.message);
-        console.log(element.context.key);
-        initialError = {
-          ...initialError,
-          [element.context.key]: element.message,
-        };
-      });
-      setErrValidate(initialError);
+      setIsDesabled(true);
+      setErrValidate({email: validation.error.details[0].message});
     }
   };
-  useEffect(() => {
-    console.log('this is use effect', props.auth);
-    if (props.auth.isPending && conf.submit === true) {
-      setConf({
-        ...conf,
-        submit: false,
+
+  const debounce = (func, timeout = 1000) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
+    };
+  };
+
+  const router = useRouter();
+  const handleForgetPassword = (e) => {
+    e.preventDefault();
+    const url = process.env.NEXT_PUBLIC_DOMAIN + '/auth/reset-password';
+    const body = {
+      email: e.target.email.value,
+      linkDirect: url,
+    };
+    console.log(body);
+    forgotPassword(body)
+      .then((res) => {
+        toast.success('Please check your email to reset password');
+        console.log(res);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.msg);
+        console.log(err);
       });
-    }
-    if (props.auth.isFulfilled) {
-      console.log('isi auth', props.auth);
-      toast.success('Login Succes.', {position: 'top-right'});
-      console.log(props.auth);
-      if (props.auth.userData.pin === null) {
-        router.push('/auth/pin');
-      }
-      router.push('/dashboard');
-    }
-    if (props.auth.isRejected && conf.submit === false) {
-      console.log(props.auth.err);
-      const error = props.auth.err;
-      toast.error(error.msg, {position: 'top-right'});
-      setConf({
-        ...conf,
-        submit: true,
-      });
-    }
-  }, [props, conf, router]);
+  };
   return (
     <>
       <Title title={'Login - Zwallet'} />
@@ -103,7 +89,7 @@ function Login(props) {
                   of that for you!
                 </p>
               </div>
-              <form onSubmit={handleLogin}>
+              <form onSubmit={handleForgetPassword}>
                 <div
                   className={`col-12 col-lg-10 col-xl-8 mx-auto px-5 ${style['starter-form']}`}>
                   <div className='row w-100 m-0 p-0'>
@@ -119,6 +105,7 @@ function Login(props) {
                           name='email'
                           id='email'
                           placeholder='Enter your e-mail'
+                          onChange={debounce(onChangeEmail)}
                         />
                         <div className={`${style['input-icon']}`}>
                           <Image src={email} alt='email' />
@@ -133,42 +120,6 @@ function Login(props) {
                           : ''
                       }`}
                     </div>
-                    <div className={`col-12 ${style['input-wrapper']}`}>
-                      <div className='position-relative'>
-                        <input
-                          className={`position-absolute ${
-                            errValidate.password &&
-                            errValidate.password !== null
-                              ? `${style['error']}`
-                              : ''
-                          }`}
-                          type={conf.passwordType}
-                          name='password'
-                          id='password'
-                          placeholder='Enter your password'
-                        />
-                        <div className={`${style['input-icon']}`}>
-                          <Image src={lock} alt='password' />
-                        </div>
-                        <div
-                          className={`position-absolute ${style['input-cross']}`}
-                          onClick={() => {
-                            if (conf.passwordType === 'password') {
-                              setConf({
-                                ...conf,
-                                passwordType: 'text',
-                              });
-                            } else {
-                              setConf({
-                                ...conf,
-                                passwordType: 'password',
-                              });
-                            }
-                          }}>
-                          <Image src={eyeCrossed} alt='see-password' />
-                        </div>
-                      </div>
-                    </div>
                     <div
                       className={`col-12 mb-2 mt-1 ${style['form-msg-error']}`}>
                       {`${
@@ -178,14 +129,10 @@ function Login(props) {
                       }`}
                     </div>
                     <div className='col-12'>
-                      <div
-                        className={`w-100 text-end ${style['forgot-password']}`}>
-                        <Link href={'/auth/forgotpassword'}>Forgot Password?</Link>
-                      </div>
                       <button
                         className={`btn btn-md ${style['starter-btn']} mb-2`}
-                        disabled={!conf.submit}>
-                        Login
+                        disabled={isDisabled}>
+                        Confirm
                       </button>
                       <div className='w-100 text-center'>
                         {`Don’t have an account? Let’s`}
@@ -209,4 +156,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(ForgetPassword);

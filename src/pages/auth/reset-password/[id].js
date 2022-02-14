@@ -1,86 +1,94 @@
 import Link from 'next/link';
-import {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Title from 'src/commons/components/Title';
 import Image from 'next/image';
 import {useRouter} from 'next/router';
 import {connect} from 'react-redux';
-import {loginAction} from 'src/redux/actions/auth';
 import LeftContentStarter from 'src/commons/components/LeftContentStarter';
 
+import {resetPassword} from 'src/modules/api/auth';
+import {validatePassword} from 'src/modules/validation/authValidation';
+
 import style from 'src/commons/styles/Starter.module.css';
-import phones from 'public/static/images/Phones.png';
-import email from 'public/static/icons/mail.svg';
 import lock from 'public/static/icons/lock.svg';
 import eyeCrossed from 'public/static/icons/eye-crossed.svg';
 
-import {validateLogin} from 'src/modules/validation/authValidation';
-
 import {toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
-function Login(props) {
-  console.log(props);
-  const [conf, setConf] = useState({passwordType: 'password', submit: true});
-  const initialError = {
-    email: null,
-    password: null,
-  };
-  const [errValidate, setErrValidate] = useState(initialError);
+function ForgetPassword(props) {
+  const newPassRef = React.createRef();
+  const confirmNewPassRef = React.createRef();
+  const [conf, setConf] = useState(['password', 'password']);
+  const [errValidate, setErrValidate] = useState([null, null]);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const router = useRouter();
-  const handleLogin = (e) => {
-    e.preventDefault();
-    console.log('email pass', e.target.email.value, e.target.password.value);
-    const body = {
-      email: e.target.email.value,
-      password: e.target.password.value,
-    };
-    const validation = validateLogin(body);
 
+  const onChangeNewPassword = (e) => {
+    const body = {
+      password: e.target.value,
+    };
+    const validation = validatePassword(body);
+    console.log(validation);
     if (!validation.error) {
-      setErrValidate({initialError});
-      props.dispatch(loginAction(body));
+      let newErr = [...errValidate];
+      newErr[0] = null;
+      setErrValidate(newErr);
     }
     if (validation.error) {
-      const valError = validation.error.details;
-      valError.forEach((element) => {
-        console.log('error element', element.message, typeof element.message);
-        console.log(element.context.key);
-        initialError = {
-          ...initialError,
-          [element.context.key]: element.message,
-        };
-      });
-      setErrValidate(initialError);
+      console.log('error pass');
+      let newErr = [...errValidate];
+      newErr[0] = validation.error.details[0].message;
+      setErrValidate(newErr);
     }
   };
-  useEffect(() => {
-    console.log('this is use effect', props.auth);
-    if (props.auth.isPending && conf.submit === true) {
-      setConf({
-        ...conf,
-        submit: false,
-      });
-    }
-    if (props.auth.isFulfilled) {
-      console.log('isi auth', props.auth);
-      toast.success('Login Succes.', {position: 'top-right'});
-      console.log(props.auth);
-      if (props.auth.userData.pin === null) {
-        router.push('/auth/pin');
+
+  const onChangeResetPassword = (e) => {
+    if (e.target.value !== newPassRef.current.value) {
+      let newError = [...errValidate];
+      newError[1] = 'Please make sure your new password match';
+      setErrValidate(newError);
+      setIsDisabled(true);
+    } else {
+      let newError = [...errValidate];
+      newError[1] = null;
+      setErrValidate(newError);
+      if (errValidate[0] === null) {
+        setIsDisabled(false);
       }
-      router.push('/dashboard');
     }
-    if (props.auth.isRejected && conf.submit === false) {
-      console.log(props.auth.err);
-      const error = props.auth.err;
-      toast.error(error.msg, {position: 'top-right'});
-      setConf({
-        ...conf,
-        submit: true,
+  };
+
+  const debounce = (func, timeout = 1000) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
+    };
+  };
+
+  const handleResetPassword = (e) => {
+    e.preventDefault();
+    const {id} = router.query;
+    const body = {
+      keysChangePassword: id,
+      newPassword: newPassRef.current.value,
+      confirmPassword: confirmNewPassRef.current.value,
+    };
+    console.log(body);
+    resetPassword(body)
+      .then((res) => {
+        toast.success('Password reset successfull');
+        console.log(res);
+        router.push('/auth/login');
+      })
+      .catch((err) => {
+        toast.error(err.response.data.msg);
+        console.log(err);
       });
-    }
-  }, [props, conf, router]);
+  };
   return (
     <>
       <Title title={'Login - Zwallet'} />
@@ -103,7 +111,7 @@ function Login(props) {
                   of that for you!
                 </p>
               </div>
-              <form onSubmit={handleLogin}>
+              <form onSubmit={handleResetPassword}>
                 <div
                   className={`col-12 col-lg-10 col-xl-8 mx-auto px-5 ${style['starter-form']}`}>
                   <div className='row w-100 m-0 p-0'>
@@ -111,41 +119,16 @@ function Login(props) {
                       <div className='position-relative'>
                         <input
                           className={`position-absolute ${
-                            errValidate.email && errValidate.email !== null
+                            errValidate[0] && errValidate[0] !== null
                               ? `${style['error']}`
                               : ''
                           }`}
-                          type='email'
-                          name='email'
-                          id='email'
-                          placeholder='Enter your e-mail'
-                        />
-                        <div className={`${style['input-icon']}`}>
-                          <Image src={email} alt='email' />
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className={`col-12 mb-2 mt-1 ${style['form-msg-error']}`}>
-                      {`${
-                        errValidate.email && errValidate.email !== null
-                          ? errValidate.email
-                          : ''
-                      }`}
-                    </div>
-                    <div className={`col-12 ${style['input-wrapper']}`}>
-                      <div className='position-relative'>
-                        <input
-                          className={`position-absolute ${
-                            errValidate.password &&
-                            errValidate.password !== null
-                              ? `${style['error']}`
-                              : ''
-                          }`}
-                          type={conf.passwordType}
-                          name='password'
-                          id='password'
-                          placeholder='Enter your password'
+                          type={conf[0]}
+                          name='newPassword'
+                          id='newPassword'
+                          ref={newPassRef}
+                          onChange={debounce(onChangeNewPassword)}
+                          placeholder='Create new password'
                         />
                         <div className={`${style['input-icon']}`}>
                           <Image src={lock} alt='password' />
@@ -153,16 +136,14 @@ function Login(props) {
                         <div
                           className={`position-absolute ${style['input-cross']}`}
                           onClick={() => {
-                            if (conf.passwordType === 'password') {
-                              setConf({
-                                ...conf,
-                                passwordType: 'text',
-                              });
+                            if (conf[0] === 'password') {
+                              let newConf = [...conf];
+                              newConf[0] = 'text';
+                              setConf(newConf);
                             } else {
-                              setConf({
-                                ...conf,
-                                passwordType: 'password',
-                              });
+                              let newConf = [...conf];
+                              newConf[0] = 'password';
+                              setConf(newConf);
                             }
                           }}>
                           <Image src={eyeCrossed} alt='see-password' />
@@ -172,20 +153,59 @@ function Login(props) {
                     <div
                       className={`col-12 mb-2 mt-1 ${style['form-msg-error']}`}>
                       {`${
-                        errValidate.password && errValidate.password !== null
-                          ? errValidate.password
+                        errValidate[0] && errValidate[0] !== null
+                          ? errValidate[0]
+                          : ''
+                      }`}
+                    </div>
+                    <div className={`col-12 ${style['input-wrapper']}`}>
+                      <div className='position-relative'>
+                        <input
+                          className={`position-absolute ${
+                            errValidate[1] && errValidate[1] !== null
+                              ? `${style['error']}`
+                              : ''
+                          }`}
+                          type={conf[1]}
+                          name='confirmPassword'
+                          ref={confirmNewPassRef}
+                          id='confirmPassword'
+                          placeholder='Confirm new password'
+                          onChange={debounce(onChangeResetPassword)}
+                        />
+                        <div className={`${style['input-icon']}`}>
+                          <Image src={lock} alt='password' />
+                        </div>
+                        <div
+                          className={`position-absolute ${style['input-cross']}`}
+                          onClick={() => {
+                            if (conf[1] === 'password') {
+                              let newConf = [...conf];
+                              newConf[1] = 'text';
+                              setConf(newConf);
+                            } else {
+                              let newConf = [...conf];
+                              newConf[1] = 'password';
+                              setConf(newConf);
+                            }
+                          }}>
+                          <Image src={eyeCrossed} alt='see-password' />
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className={`col-12 mb-2 mt-1 ${style['form-msg-error']}`}>
+                      {`${
+                        errValidate[1] && errValidate[1] !== null
+                          ? errValidate[1]
                           : ''
                       }`}
                     </div>
                     <div className='col-12'>
-                      <div
-                        className={`w-100 text-end ${style['forgot-password']}`}>
-                        <Link href={'/auth/forgotpassword'}>Forgot Password?</Link>
-                      </div>
                       <button
                         className={`btn btn-md ${style['starter-btn']} mb-2`}
-                        disabled={!conf.submit}>
-                        Login
+                        disabled={isDisabled}>
+                        Confirm
                       </button>
                       <div className='w-100 text-center'>
                         {`Don’t have an account? Let’s`}
@@ -209,4 +229,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(ForgetPassword);
