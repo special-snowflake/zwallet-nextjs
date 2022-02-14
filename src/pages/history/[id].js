@@ -29,6 +29,7 @@ import LoadingComponent from 'src/commons/components/LoadingComponent';
 
 import {getDataByID} from 'src/modules/api/users';
 import {toast} from 'react-toastify';
+import CardUser from 'src/commons/components/CardUser';
 
 function HistoryByID(props) {
   const [detailHistory, setDetailHistory] = useState(null);
@@ -151,14 +152,6 @@ function HistoryByID(props) {
                         </div>
                       </div>
                     </div>
-                    {/* <div className={`col-12 ${styles['contact-item']} my-3 px-3`}>
-                    <div className='float-start ms-3'>
-                      <div className='color-grey'>Notes</div>
-                      <div className='fw-bold'>
-                        {detailHistory !== null ? detailHistory.notes : '-'}
-                      </div>
-                    </div>
-                  </div> */}
                     <div className='col-12 fw-bold mt-3'>
                       {detailHistory.type === 'accept'
                         ? 'Transfer from'
@@ -167,21 +160,12 @@ function HistoryByID(props) {
                         : 'Top Up'}
                     </div>
                     {detailHistory.type !== 'topup' && (
-                      <div
-                        className={`col-12 ${styles['contact-item']} my-3 px-3 cursor-pointer`}>
-                        <div
-                          className={`${styles['wrapper-user-image']} float-start`}>
-                          <Image
-                            src={userProfile}
-                            alt='dahsboard'
-                            objectFit='cover'
-                            layout='fill'
-                          />
-                        </div>
-                        <div className='float-start ms-3 mb-3'>
-                          <div className='fw-bold'>{`${detailHistory.firstName} ${detailHistory.lastName}`}</div>
-                        </div>
-                      </div>
+                      <CardUser
+                        id={detailHistory.id}
+                        firstName={detailHistory.firstName}
+                        lastName={detailHistory.lastName}
+                        image={detailHistory.image}
+                      />
                     )}
                     <div className='col-12 my-3'>
                       <Link href={'/dashboard'} passHref={true}>
@@ -190,11 +174,13 @@ function HistoryByID(props) {
                           Back To Home
                         </button>
                       </Link>
-                      <button
-                        className={`btn float-end ${styles['btn-light-blue']}`}
-                        onClick={exportPDF}>
-                        Download PDF
-                      </button>
+                      {detailHistory.type !== 'topup' && (
+                        <button
+                          className={`btn float-end ${styles['btn-light-blue']}`}
+                          onClick={exportPDF}>
+                          Download PDF
+                        </button>
+                      )}
                     </div>
                   </div>
                 ) : (

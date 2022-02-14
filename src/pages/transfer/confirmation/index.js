@@ -10,6 +10,7 @@ import Title from 'src/commons/components/Title';
 import Header from 'src/commons/components/Header';
 import Footer from 'src/commons/components/Footer';
 import SideNavigation from 'src/commons/components/SideNavigation';
+import CardUser from 'src/commons/components/CardUser';
 
 import {getDataByID} from 'src/modules/api/users';
 import {checkPinUser} from 'src/modules/api/users';
@@ -114,33 +115,17 @@ function TransferConfirmation(props) {
           <section className='col-12 col-md-8 col-xl-7 ps-3 mb-5'>
             <div className={`${styles['right-content']} h-100`}>
               <div className={`${styles['transfer-wrapper']}`}>
-                {props.dataTranfer.data !== null ? (
+                {userDetail !== null ? (
                   <div className='row m-0 p-0'>
                     <div className='col-12 fw-bold'>Transfer To</div>
                     <div className='col-12'>
                       <div className='row m-0 p-0 h-100'>
-                        {userDetail !== null && (
-                          <div
-                            className={`col-12 ${styles['contact-item']} my-3 px-3 cursor-pointer`}>
-                            <div
-                              className={`${styles['wrapper-user-image']} float-start`}>
-                              <Image
-                                src={userProfile}
-                                alt='dahsboard'
-                                objectFit='cover'
-                                layout='fill'
-                              />
-                            </div>
-                            <div className='float-start ms-3'>
-                              <div className='fw-bold'>{`${userDetail.firstName} ${userDetail.lastName}`}</div>
-                              <div className='color-grey'>
-                                {userDetail.noTelp !== null
-                                  ? userDetail.noTelp
-                                  : '-'}
-                              </div>
-                            </div>
-                          </div>
-                        )}
+                      <CardUser
+                            id={userDetail.id}
+                            firstName={userDetail.firstName}
+                            lastName={userDetail.lastName}
+                            image={userDetail.image}
+                          />
                       </div>
                     </div>
                     <div className='col-12 my-3 fw-bold'>Details</div>
