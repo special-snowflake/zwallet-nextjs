@@ -9,7 +9,7 @@ const initialState = {
   isPending: false,
   isFulfilled: false,
   isRejected: false,
-  err: null,
+  err: {},
 };
 
 const authReducer = (prevState = initialState, action) => {
@@ -40,8 +40,8 @@ const authReducer = (prevState = initialState, action) => {
         userData,
       };
 
-      case authLogin + rejected:
-      const err = action.payload.response.data;
+    case authLogin + rejected:
+      const err = action.payload;
       return {
         ...prevState,
         isPending: false,
